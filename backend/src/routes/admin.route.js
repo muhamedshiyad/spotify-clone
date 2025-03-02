@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { getAdmin } from "../controller/admin.controller.js";
+import { createSong } from "../controller/admin.controller.js";
+import { protectRouter, requireAdmin } from "../middleware/ath.middleware.js";
 
 const router = Router();
 
-router.get("/",getAdmin );
+router.post("/songs",protectRouter,requireAdmin,createSong );
 
 export default router;
