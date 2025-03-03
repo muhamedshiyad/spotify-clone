@@ -4,12 +4,14 @@ import { protectRouter, requireAdmin } from "../middleware/ath.middleware.js";
 
 const router = Router();
 
-router.get("/check",protectRouter,requireAdmin,checkAdmin);
+router.use(protectRouter,requireAdmin);
 
-router.post("/songs",protectRouter,requireAdmin,createSong );
-router.delete("/songs/:id",protectRouter,requireAdmin,deleteSong);
+router.get("/check",checkAdmin);
 
-router.post("/albums",protectRouter,requireAdmin,createAlbum );
-router.delete("/albums/:id",protectRouter,requireAdmin,deleteAlbum);
+router.post("/songs",createSong );
+router.delete("/songs/:id",deleteSong);
+
+router.post("/albums",createAlbum );
+router.delete("/albums/:id",deleteAlbum);
 
 export default router;
