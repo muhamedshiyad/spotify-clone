@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { clerkMiddleware } from '@clerk/express'
 import fileUpload from 'express-fileupload'
 import path from "path";
+import cors from "cors";
 
 import { connctDB } from "./lib/db.js";
 import userRoutes from "./routes/user.route.js"
@@ -18,6 +19,13 @@ const __dirname = path.resolve();
 const app = express();
 const PORT = process.env.PORT;
 
+app.use(cors(
+    {
+        origin:"http://localhost:5173",
+        credentials: true
+    }
+));
+
 app.use(express.json());
 app.use(clerkMiddleware());
 app.use(fileUpload({
@@ -25,7 +33,7 @@ app.use(fileUpload({
     tempFileDir:path.join(__dirname,"tmp"),
     createParentPath: true,
     limits: { 
-        fileSize: 50 * 1024 * 1024 
+        fileSize: 10 * 1024 * 1024 
     }
 }))
 app.use("/api/users",userRoutes);
