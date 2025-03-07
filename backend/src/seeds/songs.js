@@ -135,7 +135,7 @@ const songs = [
 
 const seedSongs = async () => {
 	try {
-		await mongoose.connect(process.env.MONGODB_URI);
+		await mongoose.connect(process.env.MONGOD_URI);
 
 		// Clear existing songs
 		await Song.deleteMany({});
@@ -151,4 +151,6 @@ const seedSongs = async () => {
 	}
 };
 
-seedSongs();
+export default seedSongs();
+
+//export const Album = mongoose.model("Album", albumSchema);

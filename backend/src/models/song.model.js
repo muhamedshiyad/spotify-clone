@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const songSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: true,
     },
     artist: {
         type: String,
@@ -11,20 +11,20 @@ const songSchema = new mongoose.Schema({
     },
     imageUrl: {
         type: String,
-        required: true
+        required: true,
     },
     audioUrl:{
         type: String,
-        required: true
+        required: true,
     },
     duration: {
         type: Number,
-        required: true
+        required: true,
     },
     albumId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Album",
-        required: true
+        required: false,
     }
 },
 {timestamps: true});
