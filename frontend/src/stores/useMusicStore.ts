@@ -33,7 +33,7 @@ export const useMusicStore = create<MusicStore>((set) => ({
 		}
 	},
 
-	fetchAlbumById:async(id:string) =>{
+	fetchAlbumById:async(id) =>{
 		set({isLoading: true,error:null});
 		try {
 			const response = await axiosInstance.get(`/albums/${id}`);
