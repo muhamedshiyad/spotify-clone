@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useMusicStore } from "@/stores/useMusicStore";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { Play } from "lucide-react";
+import { Clock, Play } from "lucide-react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom"
 
@@ -51,7 +51,15 @@ if(isLoading) return null
           {/* Table section */}
           <div className="bg-black/20 backdrop-blur-sm">
           {/* table header */}
-
+          <div className="grid grid-cols-[16px_4fr_2fr_1fr] gap-4 px-10 py-2 text-sm
+          text-zinc-400 border-b border-white/5">
+            <div>#</div>
+            <div>TITLE</div>
+            <div>Released Date</div>
+            <div>
+              <Clock className="w-4 h-4" />
+            </div>
+          </div>
           </div>
         </div>
       </div>
