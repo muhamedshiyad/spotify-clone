@@ -1,6 +1,8 @@
 import Topbar from "@/components/Topbar";
 
 const HomePage = () => {
-  return <div><Topbar/></div>
+  return <div className="rounded-md overflow-hidden">
+    <Topbar/>
+    </div>
 };
 export default HomePage
