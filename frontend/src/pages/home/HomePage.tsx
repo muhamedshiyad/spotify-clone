@@ -3,6 +3,7 @@ import { useMusicStore } from "@/stores/useMusicStore";
 import { useEffect } from "react";
 import FeaturedSection from "./components/FeaturedSection";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
+import SectionGrid from "./components/SectionGrid";
 
 const HomePage = () => {
 
@@ -36,8 +37,8 @@ const HomePage = () => {
       <FeaturedSection/>
       </div>
       <div className="space-y-8">
-        <p>made for you</p>
-        <p>trending</p>
+        <SectionGrid title="Made for you" songs={madeforyousongs}/>
+        <SectionGrid title="Trending" songs={trendingSongs}/>
       </div>
       </ScrollArea>
     </main>
