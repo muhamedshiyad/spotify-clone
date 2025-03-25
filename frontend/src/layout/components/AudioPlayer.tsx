@@ -39,8 +39,10 @@ const AudioPlayer = () => {
         // reset the playback position
         audio.currentTime = 0;
         prevSongRef.current = currentSong?.audioUrl;
+        if(isPlaying) audio.play();
         }
-    },[])
+    },[currentSong,isPlaying]);
+    
   return <audio ref={audioRef}/> 
 };
 
