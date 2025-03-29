@@ -20,6 +20,7 @@ interface MusicStore {
 	fetchMadeForYouSongs: () => Promise<void>;
 	fetchStats: () => Promise<void>;
 	fetchSongs: () => Promise<void>;
+	deleteSong: (id: string) => Promise<void>;
 }
 
 export const useMusicStore = create<MusicStore>((set) => ({
@@ -36,6 +37,20 @@ export const useMusicStore = create<MusicStore>((set) => ({
 		totalSongs:0,
 		totalUsers:0,
 		totalArtists:0
+	},
+
+	deleteSong: async (id) => {
+		set({ isLoading: true, error: null });
+		try {
+			await axiosInstance.delete(`/admin/song/${id}`);
+
+			set(state =>({
+				songs:state.songs.filter(song=>song._id !== id)
+			}))
+			toast.success("song delete successfully")
+		} catch (error) {
+			
+		}
 	},
 
 	fetchSongs: async () => {
