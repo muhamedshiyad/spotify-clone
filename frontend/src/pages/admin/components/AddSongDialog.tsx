@@ -1,10 +1,19 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { axiosInstance } from "@/lib/axios";
 import { useMusicStore } from "@/stores/useMusicStore";
 import { Plus, Upload } from "lucide-react";
 import { useRef, useState } from "react";
+import { toast } from "react-hot-toast";
+
+interface NewSong{
+  title: string;
+  artist: string;
+  album: string;
+  duration: string;
+}
 
 const AddSongDialog = () => {
 
@@ -12,11 +21,11 @@ const AddSongDialog = () => {
     const [songDialogOpen, setSongDialogOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const[newSong,setNewsong] = useState({
+    const[newSong,setNewsong] = useState<NewSong>({
         title: '',
         artist: '',
         album:'',
-        duration:0
+        duration:"0",
     });
 
     const[files,setFiles] = useState<{audio:File|null,image:File|null}>({
@@ -27,7 +36,49 @@ const AddSongDialog = () => {
     const audioInputref = useRef<HTMLInputElement>(null);
     const imageInputref = useRef<HTMLInputElement>(null);
 
-    const handleSubmit = async () => {};
+    const handleSubmit = async () => {
+      setIsLoading(true);
+
+      try {
+        if(!files.audio || !files.image){
+          return toast.error("Please upload both audio and image files");
+        }
+
+        const formData = new FormData();
+
+        formData.append("title",newSong.title);
+        formData.append("artist",newSong.artist);
+        formData.append("duration",newSong.duration);
+        if(newSong.album&& newSong.album!=='none'){
+          formData.append("albumId",newSong.album);
+        }
+
+        formData.append("audiofile",files.audio);
+        formData.append("imagefile",files.image);
+
+        await axiosInstance.post("/admin/songs",formData,{
+          headers: {
+            "Content-Type": "multipart/form-data",
+          }
+        });
+
+        setNewsong({
+          title: '',
+          artist: '',
+          album:'',
+          duration:"0",
+        })
+
+        setFiles({
+          audio:null,
+          image:null
+        })
+        toast.success("Song added successfully");
+      } catch (error:any) {
+        toast.error("failed to add song:" + error.message);
+      }finally{
+        setIsLoading(false);}
+    };
 
   return (
    <Dialog open={songDialogOpen} onOpenChange={setSongDialogOpen}>
@@ -119,7 +170,7 @@ const AddSongDialog = () => {
 							type='number'
 							min='0'
 							value={newSong.duration}
-							onChange={(e) => setNewsong({ ...newSong, duration:parseInt( e.target.value) || "0" })}
+							onChange={(e) => setNewsong({ ...newSong, duration:( e.target.value) || "0" })}
 							className='bg-zinc-800 border-zinc-700'
 						/>
 					</div>
@@ -143,9 +194,15 @@ const AddSongDialog = () => {
 							</SelectContent>
 						</Select>
 					</div>
-
       </div>
-
+      <DialogFooter>
+					<Button variant='outline' onClick={() => setSongDialogOpen(false)} disabled={isLoading}>
+						Cancel
+					</Button>
+					<Button onClick={handleSubmit} disabled={isLoading}>
+						{isLoading ? "Uploading..." : "Add Song"}
+					</Button>
+				</DialogFooter>
     </DialogContent>
    </Dialog>
   )
