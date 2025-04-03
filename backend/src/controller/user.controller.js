@@ -19,8 +19,10 @@ export const getMessage = async(req,res,next) =>{
             $or:[
                 {senderId:userId,receiverId:myId},
             ]
-        })
+        }).sort({createdAt: 1 });
+
+        res.status(200).json(messages);
     } catch (error) {
-        
+        next(error);
     }
 }
