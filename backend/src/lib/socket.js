@@ -54,6 +54,13 @@ const initializeSocket = (server) => {
             console.error("message error: ",error);
             socket.emit("message_error",error.message);
         }
-    })
+    });
+
+    socket.on("disconnect", () => {
+        let disconnectedUserId;
+        for (const [userId, socketId] of userSockets.entries()) {
+            
+        }
+    });
   });
 }
