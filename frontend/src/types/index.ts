@@ -33,3 +33,10 @@ export interface Message {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface User {
+    _id: string;
+    ClerkId: string;
+    fullName:string;
+    ImageUrl:string;
+}
