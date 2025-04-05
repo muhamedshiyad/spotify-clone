@@ -1,4 +1,5 @@
 import UsersListSkeleton from "@/components/skeletons/UsersListSkeleton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useChatStore } from "@/stores/useChatStore"
 
@@ -19,7 +20,20 @@ const UsersList = () => {
                             rounded-lg cursor-pointer transition-colors
                             ${selectedUser?.ClerkId === user.ClerkId ?"bg-zinc-800":"hover:bg-zinc-800/50"}`}
                             >
-                                {user.fullName}
+                                <div className="relative">
+                                    <Avatar className="size-8 md:size-12">
+                                        <AvatarImage src={user.ImageUrl}/>
+                                        <AvatarFallback>{user.fullName[0]}</AvatarFallback>
+                                    </Avatar>
+                                    {/*online indicator*/}
+                                    <div
+                                    className={`absolutee bottom-0 right-0 w-3 h-3 rounded-full ring-2 ring-zinc-900
+                                    ${onlineUsers.has(user.ClerkId)?"bg-green-500":"bg-zinc-500"}`}
+                                    />
+                                </div>
+                                <div className="flex-1 min-w-0 lg:block hidden">
+                                    <span className="font-medium truncate">{user.fullName}</span>
+                                </div>
                             </div>
                         ))
                     )}
