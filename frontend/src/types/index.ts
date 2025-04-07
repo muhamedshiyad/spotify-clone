@@ -38,5 +38,5 @@ export interface User {
     _id: string;
     ClerkId: string;
     fullName:string;
-    ImageUrl:string;
+    imageUrl:string;
 }

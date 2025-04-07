@@ -6,10 +6,19 @@ import UsersList from "./components/UsersList";
 import ChatHeader from "./components/ChatHeader";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import MessageInput from "./components/MessageInput";
+
+const formatTime = (date: string) => {
+	return new Date(date).toLocaleTimeString("en-US", {
+		hour: "2-digit",
+		minute: "2-digit",
+		hour12: true,
+	});
+};
 
 const ChatPage = () => {
   const{user} = useUser()
-  const{message,selectedUser,fetchUsers,fetchMessages} = useChatStore();
+  const{messages,selectedUser,fetchUsers,fetchMessages} = useChatStore();
 
   useEffect(()=>{
     if(user) fetchUsers();
@@ -35,7 +44,7 @@ const ChatPage = () => {
             {/*messages*/}
             <ScrollArea className="h-[calc(100vh-340px)]">
               <div className="p-4 space-y-4">
-                {message.map((message) => (
+                {messages.map((message) => (
                   <div key={message._id}
                   className={`flex items-start gap-3 ${message.senderId === user?.id? "flex-row-reverse":""}`}    
                   >
@@ -44,7 +53,7 @@ const ChatPage = () => {
                       src={
                         message.senderId === user?.id
                         ? user.imageUrl
-                        : selectedUser?.ImageUrl
+                        : selectedUser?.imageUrl
                       }
                       />
                     </Avatar>
@@ -53,13 +62,14 @@ const ChatPage = () => {
                       `}>
                         <p className="text-sm">{message.content}</p>
                         <span className="text-xs text-zinc-300 mt-1 block">
-                          {message.createdAt}
+                          {formatTime(message.createdAt)}
                         </span>
                     </div>
                   </div>
                 ))}
               </div>
             </ScrollArea>
+            <MessageInput/>
             </>
           ):<NoConversationPlaceholder/>}
         </div>
