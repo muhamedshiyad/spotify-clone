@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { protectRouter} from "../middleware/ath.middleware.js";
-import { getAllUsers, getMessage } from "../controller/user.controller.js";
-
+import { protectRoute } from "../middleware/ath.middleware.js";
+import { getAllUsers, getMessages } from "../controller/user.controller.js";
 const router = Router();
 
-router.get("/",protectRouter,getAllUsers);
+router.get("/", protectRoute, getAllUsers);
+router.get("/messages/:userId", protectRoute, getMessages);
 
-export  default router;
+export default router;

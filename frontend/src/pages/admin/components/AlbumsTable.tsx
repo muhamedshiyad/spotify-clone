@@ -1,16 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useMusicStore } from "@/stores/useMusicStore"
+import { useMusicStore } from "@/stores/useMusicStore";
 import { Calendar, Music, Trash2 } from "lucide-react";
 import { useEffect } from "react";
 
 const AlbumsTable = () => {
-    const { albums, deleteAlbum, fetchAlbums } = useMusicStore();
-    useEffect(()=>{
-        fetchAlbums();
-    },[fetchAlbums]);
-  return (
-    <Table>
+	const { albums, deleteAlbum, fetchAlbums } = useMusicStore();
+
+	useEffect(() => {
+		fetchAlbums();
+	}, [fetchAlbums]);
+
+	return (
+		<Table>
 			<TableHeader>
 				<TableRow className='hover:bg-zinc-800/50'>
 					<TableHead className='w-[50px]'></TableHead>
@@ -57,7 +59,6 @@ const AlbumsTable = () => {
 				))}
 			</TableBody>
 		</Table>
-  )
-}
-
-export default AlbumsTable
+	);
+};
+export default AlbumsTable;

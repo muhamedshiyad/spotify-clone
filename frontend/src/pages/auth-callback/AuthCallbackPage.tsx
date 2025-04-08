@@ -13,7 +13,7 @@ const AuthCallbackPage = () => {
 	useEffect(() => {
 		const syncUser = async () => {
 			if (!isLoaded || !user || syncAttempted.current) return;
-			
+
 			try {
 				syncAttempted.current = true;
 
@@ -23,8 +23,6 @@ const AuthCallbackPage = () => {
 					lastName: user.lastName,
 					imageUrl: user.imageUrl,
 				});
-
-
 			} catch (error) {
 				console.log("Error in auth callback", error);
 			} finally {

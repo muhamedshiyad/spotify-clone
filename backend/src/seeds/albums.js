@@ -7,7 +7,7 @@ config();
 
 const seedDatabase = async () => {
 	try {
-		await mongoose.connect(process.env.MONGOD_URI);
+		await mongoose.connect(process.env.MONGODB_URI);
 
 		// Clear existing data
 		await Album.deleteMany({});
@@ -181,4 +181,3 @@ const seedDatabase = async () => {
 };
 
 seedDatabase();
-
