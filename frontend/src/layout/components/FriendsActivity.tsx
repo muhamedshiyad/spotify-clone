@@ -28,7 +28,7 @@ const friendsActivity = () => {
       <ScrollArea className="flex-1">
         <div className="p-4 space-y-4">
             {users.map((user)=>{
-                const activity = userActivities.get(user._id);
+                const activity = userActivities.get(user.ClerkId);
                 const isPlaying = activity && activity !== "Idle";
                 return (
                 <div key={user._id} className="cursor-pointer hover:bg-zinc-800/50 p-3 rounded-md transition-colors group"
@@ -43,7 +43,9 @@ const friendsActivity = () => {
                                 <AvatarFallback>{user.fullName[0]}</AvatarFallback>
                             </Avatar>
                             <div
-                                className="absolute right-0 bottom-0 rounded-full w-3 h-3 border-2 border-zinc-900 bg-zinc-500"
+                                className={`absolute right-0 bottom-0 rounded-full w-3 h-3 border-2 border-zinc-900
+                                ${onlineUsers.has(user.ClerkId)?"bg-green-500":"bg-zinc-500"} 
+                                `}
                                 aria-hidden="true"
                             />
                         </div>
